@@ -418,7 +418,7 @@ let app = new Vue({
           for (let date of dates) {
             arr.push(row[date]);
           }
-          let slope = arr.map((e,i,a) => e - a[i - this.lookbackTime]);
+          let slope = arr.map((e,i,a) => Math.max(e - a[i - this.lookbackTime], 0.5));
           let region = row.region
 
           if (Object.keys(renames).includes(region)) {
@@ -722,6 +722,7 @@ let app = new Vue({
       let trace1 = this.filteredCovidData.map((e,i) => ({
         x: e.cases.slice(0, this.day),
         y: e.slope.slice(0, this.day),
+        customdata: e.slope.slice(0, this.day).map(v => v < 1 ? 0 : v),
         name: e.country,
         text: this.dates.map(date => e.country + '<br>' + this.formatDate(date) ),
         mode: showDailyMarkers ? 'lines+markers' : 'lines',
@@ -735,7 +736,7 @@ let app = new Vue({
           color: 'rgba(0,0,0,0.15)'
         },
         hoverinfo:'x+y+text',
-        hovertemplate: '%{text}<br>Total ' + this.selectedData +': %{x:,}<br>Weekly ' + this.selectedData +': %{y:,}<extra></extra>',
+        hovertemplate: '%{text}<br>Total ' + this.selectedData +': %{x:,}<br>Weekly ' + this.selectedData +': %{customdata:,}<extra></extra>',
       })
       );
 
@@ -743,6 +744,7 @@ let app = new Vue({
       let trace2 = this.filteredCovidData.map((e,i) => ({
         x: [e.cases[this.day - 1]],
         y: [e.slope[this.day - 1]],
+        customdata: [e.slope[this.day - 1] < 1 ? 0 : e.slope[this.day - 1]],
         text: e.country,
         name: e.country,
         mode: this.showLabels ? 'markers+text' : 'markers',
@@ -752,7 +754,7 @@ let app = new Vue({
           size: 6,
           color: 'rgba(254, 52, 110, 1)'
         },
-        hovertemplate: '%{data.text}<br>Total ' + this.selectedData +': %{x:,}<br>Weekly ' + this.selectedData +': %{y:,}<extra></extra>',
+        hovertemplate: '%{data.text}<br>Total ' + this.selectedData +': %{x:,}<br>Weekly ' + this.selectedData +': %{customdata:,}<extra></extra>',
 
        })
       );
@@ -845,11 +847,12 @@ let app = new Vue({
     },
 
     logyrange() {
-
-      if (this.ymin < 10) { // shift ymin on log scale if fewer than 10 cases
-        return [0, Math.ceil(Math.log10(1.5 * this.ymax))]
+      let ymin = Math.min(...this.filteredSlope);
+ 
+      if (ymin < 10) { // shift ymin on log scale if fewer than 10 cases
+        return [-0.5, Math.ceil(Math.log10(1.5*this.ymax))]
       } else {
-        return [1, Math.ceil(Math.log10(1.5 * this.ymax))]
+        return [1, Math.ceil(Math.log10(1.5*this.ymax))]
       }
     },
 
