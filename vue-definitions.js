@@ -7,6 +7,24 @@ Vue.component('graph', {
 
   methods: {
 
+    // Plotly Function Wrappers
+    plotlyReact(t, e, n, a) {
+      console.log("plotlyReact");
+      Plotly.react(t, e, n, a);
+      
+      if(Math.pow(10, this.yrange[0]) < 1 || !this.userSetRange) {
+        document.getElementsByClassName("ytick")[0].firstElementChild.textContent = "0";
+      }
+    },
+
+    plotlyRestyle(t, e, r) {
+      Plotly.restyle(t, e, r);
+      
+      if(Math.pow(10, this.yrange[0]) < 1 || !this.userSetRange) {
+        document.getElementsByClassName("ytick")[0].firstElementChild.textContent = "0";
+      }
+    },
+
     mountGraph() {
 
       Plotly.newPlot(this.$refs.graph, [], {}, {responsive: true});
@@ -28,7 +46,7 @@ Vue.component('graph', {
           let update = {'line':{color: 'rgba(254, 52, 110, 1)'}};
 
           for (let i of this.traceIndices) {
-            Plotly.restyle(this.$refs.graph, update, [i]);
+            this.plotlyRestyle(this.$refs.graph, update, [i]);
           }
         }
 
@@ -39,9 +57,9 @@ Vue.component('graph', {
         let update = {'line':{color: 'rgba(0,0,0,0.15)'}};
 
         for (let i of this.traceIndices) {
-          Plotly.restyle(this.$refs.graph, update, [i]);
+          this.plotlyRestyle(this.$refs.graph, update, [i]);
         }
-
+        
     },
 
     onLayoutChange(data) {
@@ -52,6 +70,7 @@ Vue.component('graph', {
       if (data['xaxis.autorange'] == true || data['yaxis.autorange'] == true) {
         this.userSetRange = false;
         this.updateGraph();
+        document.getElementsByClassName("ytick")[0].firstElementChild.textContent = "0";
       }
 
       // if the user selects a custom range, use this
@@ -76,8 +95,8 @@ Vue.component('graph', {
         layout.yaxis.range = this.yrange;
       }
 
-      Plotly.react(this.$refs.graph, this.graphData.traces, layout, this.graphData.config);
-
+      this.plotlyReact(this.$refs.graph, this.graphData.traces, layout, this.graphData.config);
+      
     },
 
     calculateAngle() {
