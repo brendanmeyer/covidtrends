@@ -9,11 +9,10 @@ Vue.component('graph', {
 
     // Plotly Function Wrappers
     plotlyReact(t, e, n, a) {
-      console.log("plotlyReact");
       Plotly.react(t, e, n, a);
 
-      if(Math.pow(10, this.yrange[0]) < 1 || !this.userSetRange) {
-        document.getElementsByClassName("ytick")[0].firstElementChild.textContent = "0";
+      if (Math.pow(10, this.yrange[0]) < 1 || !this.userSetRange) {
+        document.getElementsByClassName('ytick')[0].firstElementChild.textContent = "0";
       }
     },
 
@@ -21,7 +20,7 @@ Vue.component('graph', {
       Plotly.restyle(t, e, r);
 
       if(Math.pow(10, this.yrange[0]) < 1 || !this.userSetRange) {
-        document.getElementsByClassName("ytick")[0].firstElementChild.textContent = "0";
+        document.getElementsByClassName('ytick')[0].firstElementChild.textContent = "0";
       }
     },
 
@@ -45,10 +44,10 @@ Vue.component('graph', {
         this.traceIndices = this.graphData.traces.map((e, i) => e.name == name ? i : -1).filter(e => e >= 0);
         let update = {'line': {color: 'rgba(254, 52, 110, 1)'}};
 
-          for (let i of this.traceIndices) {
-            this.plotlyRestyle(this.$refs.graph, update, [i]);
-          }
+        for (let i of this.traceIndices) {
+          this.plotlyRestyle(this.$refs.graph, update, [i]);
         }
+      }
 
     },
 
