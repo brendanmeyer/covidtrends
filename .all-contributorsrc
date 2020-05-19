@@ -52,7 +52,8 @@
       "avatar_url": "https://avatars3.githubusercontent.com/u/180672?v=4",
       "profile": "https://github.com/edg2s",
       "contributions": [
-        "code"
+        "code",
+        "tool"
       ]
     },
     {
@@ -204,6 +205,42 @@
       "profile": "https://github.com/archiewood",
       "contributions": [
         "ideas"
+      ]
+    },
+    {
+      "login": "reaganch",
+      "name": "Reagan Chandramohan",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/14113814?v=4",
+      "profile": "https://reaganc.bitbucket.io",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "CharsiBabu",
+      "name": "CharsiBabu",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/4214491?v=4",
+      "profile": "https://github.com/CharsiBabu",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "MrSpiffyClean",
+      "name": "Ricardo Gonçalves",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/63736648?v=4",
+      "profile": "https://github.com/MrSpiffyClean",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "bchurchill",
+      "name": "Berkeley Churchill",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/640745?v=4",
+      "profile": "http://www.berkeleychurchill.com",
+      "contributions": [
+        "code"
       ]
     }
   ],
