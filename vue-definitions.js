@@ -12,15 +12,15 @@ Vue.component('graph', {
       Plotly.react(t, e, n, a);
 
       if (Math.pow(10, this.yrange[0]) < 1 || !this.userSetRange) {
-        document.getElementsByClassName('ytick')[0].firstElementChild.textContent = "0";
+        document.getElementsByClassName('ytick')[0].firstElementChild.textContent = '0';
       }
     },
 
     plotlyRestyle(t, e, r) {
       Plotly.restyle(t, e, r);
 
-      if(Math.pow(10, this.yrange[0]) < 1 || !this.userSetRange) {
-        document.getElementsByClassName('ytick')[0].firstElementChild.textContent = "0";
+      if (Math.pow(10, this.yrange[0]) < 1 || !this.userSetRange) {
+        document.getElementsByClassName('ytick')[0].firstElementChild.textContent = '0';
       }
     },
 
@@ -55,9 +55,9 @@ Vue.component('graph', {
 
       let update = {'line': {color: 'rgba(0,0,0,0.15)'}};
 
-        for (let i of this.traceIndices) {
-          this.plotlyRestyle(this.$refs.graph, update, [i]);
-        }
+      for (let i of this.traceIndices) {
+        this.plotlyRestyle(this.$refs.graph, update, [i]);
+      }
 
     },
 
@@ -69,7 +69,7 @@ Vue.component('graph', {
       if (data['xaxis.autorange'] == true || data['yaxis.autorange'] == true) {
         this.userSetRange = false;
         this.updateGraph();
-        document.getElementsByClassName("ytick")[0].firstElementChild.textContent = "0";
+        document.getElementsByClassName('ytick')[0].firstElementChild.textContent = '0';
       }
 
       // if the user selects a custom range, use this
@@ -77,6 +77,13 @@ Vue.component('graph', {
         this.xrange = [data['xaxis.range[0]'], data['xaxis.range[1]']].map(e => parseFloat(e));
         this.yrange = [data['yaxis.range[0]'], data['yaxis.range[1]']].map(e => parseFloat(e));
         this.userSetRange = true;
+      }
+
+      if (this.yrange[0] < -0.5) {
+        this.yrange[0] = -0.5;
+      }
+      if (this.xrange[0] < -0.5) {
+        this.xrange[0] = -0.5;
       }
 
     },
@@ -751,8 +758,8 @@ window.app = new Vue({
         line: {
           color: 'rgba(0,0,0,0.15)'
         },
-        hoverinfo:'x+y+text',
-        hovertemplate: '%{text}<br>Total ' + this.selectedData +': %{x:,}<br>Weekly ' + this.selectedData +': %{customdata:,}<extra></extra>',
+        hoverinfo: 'x+y+text',
+        hovertemplate: '%{text}<br>Total ' + this.selectedData + ': %{x:,}<br>Weekly ' + this.selectedData + ': %{customdata:,}<extra></extra>',
       })
       );
 
@@ -770,7 +777,7 @@ window.app = new Vue({
           size: 6,
           color: 'rgba(254, 52, 110, 1)'
         },
-        hovertemplate: '%{data.text}<br>Total ' + this.selectedData +': %{x:,}<br>Weekly ' + this.selectedData +': %{customdata:,}<extra></extra>',
+        hovertemplate: '%{data.text}<br>Total ' + this.selectedData + ': %{x:,}<br>Weekly ' + this.selectedData + ': %{customdata:,}<extra></extra>',
 
       }));
 
