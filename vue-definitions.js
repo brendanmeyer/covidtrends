@@ -79,11 +79,25 @@ Vue.component('graph', {
         this.userSetRange = true;
       }
 
-      if (this.yrange[0] < -0.5) {
-        this.yrange[0] = -0.5;
+      if (this.selectedScale == 'Linear Scale') {
+        if (this.yrange[0] < 0) {
+          this.yrange[0] = 0;
+          this.userSetRange = true;
+        }
+        if (this.xrange[0] < -0.49) {
+          this.xrange[0] = -0.49;
+          this.userSetRange = true;
+        }
       }
-      if (this.xrange[0] < -0.5) {
-        this.xrange[0] = -0.5;
+      else {
+        if (this.yrange[0] < -0.5) {
+          this.yrange[0] = -0.5;
+          this.userSetRange = true;
+        }
+        if (this.xrange[0] < 1) {
+          this.xrange[0] = 1;
+          this.userSetRange = true;
+        }
       }
 
     },
